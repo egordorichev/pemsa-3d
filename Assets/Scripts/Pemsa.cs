@@ -161,7 +161,7 @@ public class Pemsa : MonoBehaviour
             HasKey,
             ResetInput,
             GetClipboardText);
-        PemsaEmulator.LoadCart(emulator, "C:/Users/matdi/Documents/git/pemsa-carts/celeste.p8");
+        PemsaEmulator.LoadCart(emulator, Application.streamingAssetsPath + "/celeste.p8");
     }
 
     // Update is called once per frame
