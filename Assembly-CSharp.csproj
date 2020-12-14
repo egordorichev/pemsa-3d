@@ -51,6 +51,8 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\CartController.cs" />
+     <Compile Include="Assets\Scripts\Pemsa.cs" />
+     <Compile Include="Assets\Scripts\PemsaEmulator.cs" />
      <Compile Include="Assets\Scripts\Util.cs" />
      <Compile Include="Assets\Scripts\Palette.cs" />
  <Reference Include="Unity.Timeline.Editor">
