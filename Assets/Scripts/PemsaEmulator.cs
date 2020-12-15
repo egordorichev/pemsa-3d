@@ -8,10 +8,9 @@ using UnityEngine.UI;
 using AOT;
 
 public static class PemsaEmulator {
-	private const string PEMSA_LIBRARY_NAME = "pemsa_pinvoke";
+	private const string PemsaLibraryName = "pemsa_pinvoke";
 
-	#region PEMSA_PINVOKE
-
+	#region Pemsa pinvoke
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	public delegate void ManagedFlip();
 
@@ -51,44 +50,45 @@ public static class PemsaEmulator {
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	public delegate string ManagedGetClipboardText();
 
-	[DllImport(PEMSA_LIBRARY_NAME, CallingConvention = CallingConvention.Cdecl)]
+	[DllImport(PemsaLibraryName, CallingConvention = CallingConvention.Cdecl)]
 	public static extern IntPtr AllocateEmulator(
-			ManagedFlip flip,
-			ManagedCreateSurface createSurface,
-			ManagedGetFps getFps,
-			ManagedIsButtonDown isButtonDown,
-			ManagedIsButtonPressed isButtonPressed,
-			ManagedUpdateInput updateInput,
-			ManagedGetMouseX getMouseX,
-			ManagedGetMouseY getMouseY,
-			ManagedGetMouseMask getMouseMask,
-			ManagedReadKey readKey,
-			ManagedHasKey hasKey,
-			ManagedResetInput resetInput,
-			ManagedGetClipboardText getClipboardText);
+		ManagedFlip flip,
+		ManagedCreateSurface createSurface,
+		ManagedGetFps getFps,
+		ManagedIsButtonDown isButtonDown,
+		ManagedIsButtonPressed isButtonPressed,
+		ManagedUpdateInput updateInput,
+		ManagedGetMouseX getMouseX,
+		ManagedGetMouseY getMouseY,
+		ManagedGetMouseMask getMouseMask,
+		ManagedReadKey readKey,
+		ManagedHasKey hasKey,
+		ManagedResetInput resetInput,
+		ManagedGetClipboardText getClipboardText
+	);
 
-	[DllImport(PEMSA_LIBRARY_NAME, CallingConvention = CallingConvention.Cdecl)]
+	[DllImport(PemsaLibraryName, CallingConvention = CallingConvention.Cdecl)]
 	public static extern void FreeEmulator(IntPtr emulator);
 
-	[DllImport(PEMSA_LIBRARY_NAME, CallingConvention = CallingConvention.Cdecl)]
+	[DllImport(PemsaLibraryName, CallingConvention = CallingConvention.Cdecl)]
 	public static extern void StopEmulator(IntPtr emulator);
 
-	[DllImport(PEMSA_LIBRARY_NAME, CallingConvention = CallingConvention.Cdecl)]
+	[DllImport(PemsaLibraryName, CallingConvention = CallingConvention.Cdecl)]
 	public static extern void ResetEmulator(IntPtr emulator);
 
-	[DllImport(PEMSA_LIBRARY_NAME, CallingConvention = CallingConvention.Cdecl)]
+	[DllImport(PemsaLibraryName, CallingConvention = CallingConvention.Cdecl)]
 	public static extern IntPtr GetRam(IntPtr emulator);
 
-	[DllImport(PEMSA_LIBRARY_NAME, CallingConvention = CallingConvention.Cdecl)]
+	[DllImport(PemsaLibraryName, CallingConvention = CallingConvention.Cdecl)]
 	public static extern Byte GetScreenColor(IntPtr emulator, int i);
 
-	[DllImport(PEMSA_LIBRARY_NAME, CallingConvention = CallingConvention.Cdecl)]
+	[DllImport(PemsaLibraryName, CallingConvention = CallingConvention.Cdecl)]
 	public static extern void UpdateEmulator(IntPtr emulator, double delta);
 
-	[DllImport(PEMSA_LIBRARY_NAME, CallingConvention = CallingConvention.Cdecl)]
+	[DllImport(PemsaLibraryName, CallingConvention = CallingConvention.Cdecl)]
 	public static extern void LoadCart(IntPtr emulator, string cart);
 
-	[DllImport(PEMSA_LIBRARY_NAME, CallingConvention = CallingConvention.Cdecl)]
+	[DllImport(PemsaLibraryName, CallingConvention = CallingConvention.Cdecl)]
 	public static extern double SampleAudio(IntPtr emulator);
 	#endregion
 }
