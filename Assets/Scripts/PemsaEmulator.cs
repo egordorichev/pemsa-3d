@@ -89,6 +89,9 @@ public static class PemsaEmulator {
 	public static extern void LoadCart(IntPtr emulator, string cart);
 
 	[DllImport(PemsaLibraryName, CallingConvention = CallingConvention.Cdecl)]
+	public static extern void CleanupAndLoadCart(IntPtr emulator, string cart);
+
+	[DllImport(PemsaLibraryName, CallingConvention = CallingConvention.Cdecl)]
 	public static extern double SampleAudio(IntPtr emulator);
 
 	[DllImport(PemsaLibraryName, CallingConvention = CallingConvention.Cdecl)]
