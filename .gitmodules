@@ -1,0 +1,4 @@
+[submodule "Assets/StreamingAssets"]
+	path = Assets/StreamingAssets
+	url = https://github.com/egordorichev/pemsa-carts
+	branch = master
