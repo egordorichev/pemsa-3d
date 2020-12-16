@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace emulator {
 	public class GraphicsUnit : Unit {
-		private Color[] screenColorData = new Color[128 * 128];
+		private static Color[] screenColorData = new Color[128 * 128];
 		private Texture2D screenTexture;
-		private int fps;
+		private static int fps;
 
 		public GraphicsUnit(Emulator emulator) : base(emulator) {
 			Application.targetFrameRate = 60;
@@ -31,7 +31,7 @@ namespace emulator {
 		#region Api
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedFlip))]
-		public void Flip() {
+		public static void Flip() {
 			if (emulator.EmulatorPointer == IntPtr.Zero) {
 				return;
 			}
@@ -54,11 +54,11 @@ namespace emulator {
 		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedCreateSurface))]
-		public void CreateSurface() {
+		public static void CreateSurface() {
 		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedGetFps))]
-		public int GetFps() {
+		public static int GetFps() {
 			return fps;
 		}
 		#endregion

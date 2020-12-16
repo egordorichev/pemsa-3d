@@ -6,14 +6,14 @@ namespace emulator {
 		private const int ButtonCount = 7;
 		private const int PlayerCount = 8;
 
-		private bool[,] buttonsDown = new bool[ButtonCount, PlayerCount];
-		private bool[,] buttonsPressed = new bool[ButtonCount, PlayerCount];
+		private static bool[,] buttonsDown = new bool[ButtonCount, PlayerCount];
+		private static bool[,] buttonsPressed = new bool[ButtonCount, PlayerCount];
 
-		private Vector2 mousePosition;
-		private int mouseButtonsMask;
+		private static Vector2 mousePosition;
+		private static int mouseButtonsMask;
 
-		private bool isAnyKeyDown;
-		private string lastKeyDown = "";
+		private static bool isAnyKeyDown;
+		private static string lastKeyDown = "";
 
 		public InputUnit(Emulator emulator) : base(emulator) {
 
@@ -64,53 +64,53 @@ namespace emulator {
 		
 		#region Api
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedIsButtonDown))]
-		public bool IsButtonDown(int i, int p) {
+		public static bool IsButtonDown(int i, int p) {
 			lock (buttonsPressed) {
 				return buttonsDown[i, p];
 			}
 		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedIsButtonPressed))]
-		public bool IsButtonPressed(int i, int p) {
+		public static bool IsButtonPressed(int i, int p) {
 			lock (buttonsPressed) {
 				return buttonsPressed[i, p];
 			}
 		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedUpdateInput))]
-		public void UpdateInput() {
+		public static void UpdateInput() {
 
 		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedGetMouseX))]
-		public int GetMouseX() {
+		public static int GetMouseX() {
 			return (int) Mathf.Clamp(mousePosition.x, 0, 127);
 		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedGetMouseY))]
-		public int GetMouseY() {
+		public static int GetMouseY() {
 			return (int) Mathf.Clamp(mousePosition.y, 0, 127);
 		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedGetMouseMask))]
-		public int GetMouseMask() {
+		public static int GetMouseMask() {
 			return mouseButtonsMask;
 		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedReadKey))]
-		public string ReadKey() {
+		public static string ReadKey() {
 			lock (lastKeyDown) {
 				return lastKeyDown;
 			}
 		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedHasKey))]
-		public bool HasKey() {
+		public static bool HasKey() {
 			return isAnyKeyDown;
 		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedResetInput))]
-		public void ResetInput() {
+		public static void ResetInput() {
 			lock (buttonsPressed) {
 				for (int i = 0; i < ButtonCount; ++i) {
 					for (int j = 0; j < PlayerCount; ++j) {
@@ -121,7 +121,7 @@ namespace emulator {
 		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedGetClipboardText))]
-		public string GetClipboardText() {
+		public static string GetClipboardText() {
 			return GUIUtility.systemCopyBuffer;
 		}
 		#endregion

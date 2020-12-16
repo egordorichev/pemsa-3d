@@ -27,20 +27,20 @@ namespace emulator {
 			units[2] = audioUnit = new AudioUnit(this);
 
 			emulatorPointer = PemsaEmulator.AllocateEmulator(
-				graphicsUnit.Flip,
-				graphicsUnit.CreateSurface,
-				graphicsUnit.GetFps,
+				GraphicsUnit.Flip,
+				GraphicsUnit.CreateSurface,
+				GraphicsUnit.GetFps,
 
-				inputUnit.IsButtonDown,
-				inputUnit.IsButtonPressed,
-				inputUnit.UpdateInput,
-				inputUnit.GetMouseX,
-				inputUnit.GetMouseY,
-				inputUnit.GetMouseMask,
-				inputUnit.ReadKey,
-				inputUnit.HasKey,
-				inputUnit.ResetInput,
-				inputUnit.GetClipboardText
+				InputUnit.IsButtonDown,
+				InputUnit.IsButtonPressed,
+				InputUnit.UpdateInput,
+				InputUnit.GetMouseX,
+				InputUnit.GetMouseY,
+				InputUnit.GetMouseMask,
+				InputUnit.ReadKey,
+				InputUnit.HasKey,
+				InputUnit.ResetInput,
+				InputUnit.GetClipboardText
 			);
 
 			PemsaEmulator.LoadCart(emulatorPointer, $"{Application.streamingAssetsPath}/{CartName}.p8");

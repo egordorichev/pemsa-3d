@@ -90,5 +90,8 @@ public static class PemsaEmulator {
 
 	[DllImport(PemsaLibraryName, CallingConvention = CallingConvention.Cdecl)]
 	public static extern double SampleAudio(IntPtr emulator);
+
+	[DllImport(PemsaLibraryName, CallingConvention = CallingConvention.Cdecl)]
+	public static extern double[] SampleAudioMultiple(IntPtr emulator, double[] outSamples, int nSamples);
 	#endregion
 }

@@ -1,9 +1,9 @@
 ﻿namespace emulator {
 	public class Unit {
-		protected Emulator emulator;
+		protected static Emulator emulator;
 
 		public Unit(Emulator emulator) {
-			this.emulator = emulator;
+			Unit.emulator = emulator;
 		}
 
 		public virtual void Update() {
