@@ -43,7 +43,7 @@ public class CartController : MonoBehaviour {
 
     private Texture2D ReadTexture(string[] data, int position, int width, int height) {
         var texture = new Texture2D(width, height);
-        var size = 128 * 128;
+        var size = width * height;
         var pixels = new Color[size];
 
         for (var y = 0; y < height; y++) {
