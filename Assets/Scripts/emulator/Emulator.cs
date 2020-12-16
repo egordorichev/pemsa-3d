@@ -4,6 +4,9 @@ using UnityEngine;
 namespace emulator {
 	[RequireComponent(typeof(AudioSource))]
 	public class Emulator : MonoBehaviour {
+		// Public so we can set this in the editor.
+		public string CartName = "celeste";
+
 		private Unit[] units = new Unit[3];
 
 		private GraphicsUnit graphicsUnit;
@@ -17,10 +20,6 @@ namespace emulator {
 
 		public void Start() {
 			Console.SetOut(new DebugLogWriter());
-
-			units[0] = graphicsUnit = new GraphicsUnit(this);
-			units[1] = inputUnit = new InputUnit(this);
-			units[2] = audioUnit = new AudioUnit(this);
 
 			emulatorPointer = PemsaEmulator.AllocateEmulator(
 				graphicsUnit.Flip,
@@ -39,8 +38,12 @@ namespace emulator {
 				inputUnit.GetClipboardText
 			);
 
-			var id = "celeste";
-			PemsaEmulator.LoadCart(emulatorPointer, $"{Application.streamingAssetsPath}/{id}.p8");
+			units[0] = graphicsUnit = new GraphicsUnit(this);
+			units[1] = inputUnit = new InputUnit(this);
+			units[2] = audioUnit = new AudioUnit(this);
+
+
+			PemsaEmulator.LoadCart(emulatorPointer, $"{Application.streamingAssetsPath}/{CartName}.p8");
 		}
 
 		public void Update() {
