@@ -8,7 +8,7 @@ public class CartController : MonoBehaviour {
     private Texture2D creditsTexture;
 
     public void Start() {
-        var path = $"{Application.streamingAssetsPath}/{Id}.p8";
+        var path = $"{Application.streamingAssetsPath}/carts/{Id}.p8";
 
         try {
             var data = File.ReadAllLines(path);
@@ -43,13 +43,19 @@ public class CartController : MonoBehaviour {
 
     private Texture2D ReadTexture(string[] data, int position, int width, int height) {
         var texture = new Texture2D(width, height);
-        var size = 128 * 128;
+        var size = width * height;
         var pixels = new Color[size];
 
         for (var y = 0; y < height; y++) {
-            var line = data[y + position + 1];
+            var yi = y + position + 1;
 
-            for (var x = 0; x < width; x++) {
+            if (yi >= data.Length) {
+                break;
+            }
+
+            var line = data[yi];
+
+            for (var x = 0; x < width && x < line.Length; x++) {
                 pixels[x + (height - y - 1) * width] = Palette.standard[Util.HexToInt(line[x])];
             }
         }
