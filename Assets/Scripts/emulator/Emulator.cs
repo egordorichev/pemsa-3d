@@ -21,7 +21,6 @@ namespace emulator {
 		public void Start() {
 			Console.SetOut(new DebugLogWriter());
 
-
 			units[0] = graphicsUnit = new GraphicsUnit(this);
 			units[1] = inputUnit = new InputUnit(this);
 			units[2] = audioUnit = new AudioUnit(this);
@@ -43,7 +42,7 @@ namespace emulator {
 				InputUnit.GetClipboardText
 			);
 
-			PemsaEmulator.LoadCart(emulatorPointer, $"{Application.streamingAssetsPath}/{CartName}.p8");
+			PemsaEmulator.LoadCart(emulatorPointer, $"{Application.streamingAssetsPath}/carts/{CartName}.p8");
 		}
 
 		public void Update() {
@@ -54,7 +53,7 @@ namespace emulator {
 					var controller = hit.collider.gameObject.GetComponent<CartController>();
 
 					if (controller != null) {
-						PemsaEmulator.CleanupAndLoadCart(emulatorPointer, $"{Application.streamingAssetsPath}/{controller.Id}.p8");
+						PemsaEmulator.CleanupAndLoadCart(emulatorPointer, $"{Application.streamingAssetsPath}/carts/{controller.Id}.p8");
 					}
 				}
 			}
