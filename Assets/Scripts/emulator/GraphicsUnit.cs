@@ -22,6 +22,8 @@ namespace emulator {
 		}
 
 		public override void Update() {
+			PemsaEmulator.Render(emulator.EmulatorPointer);
+
 			screenTexture.SetPixels(screenColorData);
 			screenTexture.Apply();
 
@@ -29,6 +31,12 @@ namespace emulator {
 		}
 
 		#region Api
+
+		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedFlip))]
+		public static void Render()
+		{
+			
+		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedFlip))]
 		public static void Flip() {

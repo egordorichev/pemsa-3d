@@ -29,6 +29,7 @@ namespace emulator {
 				GraphicsUnit.Flip,
 				GraphicsUnit.CreateSurface,
 				GraphicsUnit.GetFps,
+				GraphicsUnit.Render,
 
 				InputUnit.IsButtonDown,
 				InputUnit.IsButtonPressed,
@@ -39,7 +40,8 @@ namespace emulator {
 				InputUnit.ReadKey,
 				InputUnit.HasKey,
 				InputUnit.ResetInput,
-				InputUnit.GetClipboardText
+				InputUnit.GetClipboardText,
+				false
 			);
 
 			PemsaEmulator.LoadCart(emulatorPointer, $"{Application.streamingAssetsPath}/carts/{CartName}.p8");

@@ -15,6 +15,9 @@ public static class PemsaEmulator {
 	public delegate void ManagedFlip();
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+	public delegate void ManagedRender();
+
+	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	public delegate void ManagedCreateSurface();
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -55,6 +58,7 @@ public static class PemsaEmulator {
 		ManagedFlip flip,
 		ManagedCreateSurface createSurface,
 		ManagedGetFps getFps,
+		ManagedRender render,
 		ManagedIsButtonDown isButtonDown,
 		ManagedIsButtonPressed isButtonPressed,
 		ManagedUpdateInput updateInput,
@@ -64,7 +68,8 @@ public static class PemsaEmulator {
 		ManagedReadKey readKey,
 		ManagedHasKey hasKey,
 		ManagedResetInput resetInput,
-		ManagedGetClipboardText getClipboardText
+		ManagedGetClipboardText getClipboardText,
+		bool disableSpash
 	);
 
 	[DllImport(PemsaLibraryName, CallingConvention = CallingConvention.Cdecl)]
@@ -96,5 +101,8 @@ public static class PemsaEmulator {
 
 	[DllImport(PemsaLibraryName, CallingConvention = CallingConvention.Cdecl)]
 	public static extern double[] SampleAudioMultiple(IntPtr emulator, double[] outSamples, int nSamples);
+
+	[DllImport(PemsaLibraryName, CallingConvention = CallingConvention.Cdecl)]
+	public static extern void Render(IntPtr emulator);
 	#endregion
 }
