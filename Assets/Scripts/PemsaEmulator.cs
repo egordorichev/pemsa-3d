@@ -12,46 +12,46 @@ public static class PemsaEmulator {
 
 	#region Pemsa pinvoke
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void ManagedFlip();
+	public delegate void ManagedFlip(IntPtr emulatorPtr);
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void ManagedRender();
+	public delegate void ManagedRender(IntPtr emulatorPtr);
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void ManagedCreateSurface();
+	public delegate void ManagedCreateSurface(IntPtr emulatorPtr);
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate int ManagedGetFps();
+	public delegate int ManagedGetFps(IntPtr emulatorPtr);
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate bool ManagedIsButtonDown(int i, int p);
+	public delegate bool ManagedIsButtonDown(IntPtr emulatorPtr, int i, int p);
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate bool ManagedIsButtonPressed(int i, int p);
+	public delegate bool ManagedIsButtonPressed(IntPtr emulatorPtr, int i, int p);
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void ManagedUpdateInput();
+	public delegate void ManagedUpdateInput(IntPtr emulatorPtr);
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate int ManagedGetMouseX();
+	public delegate int ManagedGetMouseX(IntPtr emulatorPtr);
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate int ManagedGetMouseY();
+	public delegate int ManagedGetMouseY(IntPtr emulatorPtr);
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate int ManagedGetMouseMask();
+	public delegate int ManagedGetMouseMask(IntPtr emulatorPtr);
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate string ManagedReadKey();
+	public delegate string ManagedReadKey(IntPtr emulatorPtr);
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate bool ManagedHasKey();
+	public delegate bool ManagedHasKey(IntPtr emulatorPtr);
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void ManagedResetInput();
+	public delegate void ManagedResetInput(IntPtr emulatorPtr);
 
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate string ManagedGetClipboardText();
+	public delegate string ManagedGetClipboardText(IntPtr emulatorPtr);
 
 	[DllImport(PemsaLibraryName, CallingConvention = CallingConvention.Cdecl)]
 	public static extern IntPtr AllocateEmulator(

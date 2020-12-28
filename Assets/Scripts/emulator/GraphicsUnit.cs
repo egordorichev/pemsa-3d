@@ -33,25 +33,29 @@ namespace emulator {
 		#region Api
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedFlip))]
-		public static void Render()
+		public static void Render(IntPtr emulatorPtr)
 		{
-			
+
 		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedFlip))]
-		public static void Flip() {
-			if (emulator.EmulatorPointer == IntPtr.Zero) {
+		public static void Flip(IntPtr emulatorPtr)
+		{
+			if (emulatorPtr == IntPtr.Zero)
+			{
 				return;
 			}
 
-			var ram = PemsaEmulator.GetRam(emulator.EmulatorPointer);
+			var ram = PemsaEmulator.GetRam(emulatorPtr);
 			var screenColor = new int[16];
 
-			for (var i = 0; i < 16; i++) {
-				screenColor[i] = PemsaEmulator.GetScreenColor(emulator.EmulatorPointer, i);
+			for (var i = 0; i < 16; i++)
+			{
+				screenColor[i] = PemsaEmulator.GetScreenColor(emulatorPtr, i);
 			}
 
-			for (var i = 0; i < 0x2000; i++) {
+			for (var i = 0; i < 0x2000; i++)
+			{
 				var val = Marshal.ReadByte(ram + i + 0x6000);
 				var rv = screenColor[val & 0x0f];
 				var lv = screenColor[val >> 4];
@@ -62,11 +66,13 @@ namespace emulator {
 		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedCreateSurface))]
-		public static void CreateSurface() {
+		public static void CreateSurface(IntPtr emulatorPtr)
+		{
 		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedGetFps))]
-		public static int GetFps() {
+		public static int GetFps(IntPtr emulatorPtr)
+		{
 			return fps;
 		}
 		#endregion
