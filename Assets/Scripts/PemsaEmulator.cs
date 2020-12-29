@@ -6,6 +6,7 @@ using System;
 using System.Threading;
 using UnityEngine.UI;
 using AOT;
+using emulator;
 
 public static class PemsaEmulator {
 	private const string PemsaLibraryName = "pemsa_pinvoke";
@@ -104,5 +105,8 @@ public static class PemsaEmulator {
 
 	[DllImport(PemsaLibraryName, CallingConvention = CallingConvention.Cdecl)]
 	public static extern void Render(IntPtr emulator);
+
+	[DllImport(PemsaLibraryName, CallingConvention = CallingConvention.Cdecl)]
+	public static extern PemsaDrawMode GetDrawMode(IntPtr emulator);
 	#endregion
 }

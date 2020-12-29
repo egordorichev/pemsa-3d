@@ -21,10 +21,6 @@ namespace emulator {
 		public void Start() {
 			Console.SetOut(new DebugLogWriter());
 
-			units[0] = graphicsUnit = new GraphicsUnit(this);
-			units[1] = inputUnit = new InputUnit(this);
-			units[2] = audioUnit = new AudioUnit(this);
-
 			emulatorPointer = PemsaEmulator.AllocateEmulator(
 				GraphicsUnit.Flip,
 				GraphicsUnit.CreateSurface,
@@ -43,6 +39,10 @@ namespace emulator {
 				InputUnit.GetClipboardText,
 				false
 			);
+
+			units[0] = graphicsUnit = new GraphicsUnit(this);
+			units[1] = inputUnit = new InputUnit(this);
+			units[2] = audioUnit = new AudioUnit(this);
 
 			PemsaEmulator.LoadCart(emulatorPointer, $"{Application.streamingAssetsPath}/carts/{CartName}.p8");
 		}
