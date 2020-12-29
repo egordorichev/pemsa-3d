@@ -37,7 +37,7 @@ namespace emulator {
 				InputUnit.HasKey,
 				InputUnit.ResetInput,
 				InputUnit.GetClipboardText,
-				false
+				true
 			);
 
 			units[0] = graphicsUnit = new GraphicsUnit(this);

@@ -39,7 +39,7 @@ namespace emulator
             var material = emulator.GetComponent<MeshRenderer>().materials[0];
 
             material.mainTexture = screenTexture;
-            material.SetTextureScale("_MainTex", new Vector2(1, -1));
+            //material.SetTextureScale("_MainTex", new Vector2(1, -1));
         }
 
         public override void Update()
@@ -55,9 +55,9 @@ namespace emulator
         #region Api
 
         [MonoPInvokeCallback(typeof(PemsaEmulator.ManagedFlip))]
-        public static void Render(IntPtr emulatorPtr)
+        public static void Render()
         {
-            PemsaDrawMode drawMode = PemsaEmulator.GetDrawMode(emulatorPtr);
+            PemsaDrawMode drawMode = PemsaEmulator.GetDrawMode(emulator.EmulatorPointer);
 
             if (drawMode != PemsaDrawMode.SCREEN_NORMAL)
             {
@@ -136,19 +136,19 @@ namespace emulator
         }
 
         [MonoPInvokeCallback(typeof(PemsaEmulator.ManagedFlip))]
-        public static void Flip(IntPtr emulatorPtr)
+        public static void Flip()
         {
-            if (emulatorPtr == IntPtr.Zero)
+            if (emulator.EmulatorPointer == IntPtr.Zero)
             {
                 return;
             }
 
-            var ram = PemsaEmulator.GetRam(emulatorPtr);
+            var ram = PemsaEmulator.GetRam(emulator.EmulatorPointer);
             var screenColor = new int[16];
 
             for (var i = 0; i < 16; i++)
             {
-                screenColor[i] = PemsaEmulator.GetScreenColor(emulatorPtr, i);
+                screenColor[i] = PemsaEmulator.GetScreenColor(emulator.EmulatorPointer, i);
             }
 
             for (var i = 0; i < 0x2000; i++)
@@ -163,12 +163,12 @@ namespace emulator
         }
 
         [MonoPInvokeCallback(typeof(PemsaEmulator.ManagedCreateSurface))]
-        public static void CreateSurface(IntPtr emulatorPtr)
+        public static void CreateSurface()
         {
         }
 
         [MonoPInvokeCallback(typeof(PemsaEmulator.ManagedGetFps))]
-        public static int GetFps(IntPtr emulatorPtr)
+        public static int GetFps()
         {
             return fps;
         }

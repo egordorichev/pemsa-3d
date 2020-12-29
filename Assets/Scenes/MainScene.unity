@@ -553,7 +553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08a87758f1883f14988c0a19d0b1b368, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CartName: drawmodes
+  CartName: celeste
 --- !u!82 &1846284197
 AudioSource:
   m_ObjectHideFlags: 0

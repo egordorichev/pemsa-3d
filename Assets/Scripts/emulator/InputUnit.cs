@@ -72,7 +72,7 @@ namespace emulator
 
 		#region Api
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedIsButtonDown))]
-		public static bool IsButtonDown(IntPtr emulatorPtr, int i, int p)
+		public static bool IsButtonDown(int i, int p)
 		{
 			lock (buttonsPressed)
 			{
@@ -81,7 +81,7 @@ namespace emulator
 		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedIsButtonPressed))]
-		public static bool IsButtonPressed(IntPtr emulatorPtr, int i, int p)
+		public static bool IsButtonPressed(int i, int p)
 		{
 			lock (buttonsPressed)
 			{
@@ -90,31 +90,31 @@ namespace emulator
 		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedUpdateInput))]
-		public static void UpdateInput(IntPtr emulatorPtr)
+		public static void UpdateInput()
 		{
 
 		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedGetMouseX))]
-		public static int GetMouseX(IntPtr emulatorPtr)
+		public static int GetMouseX()
 		{
 			return (int)Mathf.Clamp(mousePosition.x, 0, 127);
 		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedGetMouseY))]
-		public static int GetMouseY(IntPtr emulatorPtr)
+		public static int GetMouseY()
 		{
 			return (int)Mathf.Clamp(mousePosition.y, 0, 127);
 		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedGetMouseMask))]
-		public static int GetMouseMask(IntPtr emulatorPtr)
+		public static int GetMouseMask()
 		{
 			return mouseButtonsMask;
 		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedReadKey))]
-		public static string ReadKey(IntPtr emulatorPtr)
+		public static string ReadKey()
 		{
 			lock (lastKeyDown)
 			{
@@ -123,13 +123,13 @@ namespace emulator
 		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedHasKey))]
-		public static bool HasKey(IntPtr emulatorPtr)
+		public static bool HasKey()
 		{
 			return isAnyKeyDown;
 		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedResetInput))]
-		public static void ResetInput(IntPtr emulatorPtr)
+		public static void ResetInput()
 		{
 			lock (buttonsPressed)
 			{
@@ -144,7 +144,7 @@ namespace emulator
 		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedGetClipboardText))]
-		public static string GetClipboardText(IntPtr emulatorPtr)
+		public static string GetClipboardText()
 		{
 			return GUIUtility.systemCopyBuffer;
 		}
