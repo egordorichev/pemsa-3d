@@ -48,17 +48,17 @@ namespace emulator {
 		}
 
 		public void Update() {
-			if (Input.GetMouseButtonDown(0)) {
-				var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			//if (Input.GetMouseButtonDown(0)) {
+			//	var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-				if (Physics.Raycast(ray, out var hit)) {
-					var controller = hit.collider.gameObject.GetComponent<CartController>();
+			//	if (Physics.Raycast(ray, out var hit)) {
+			//		var controller = hit.collider.gameObject.GetComponent<CartController>();
 
-					if (controller != null) {
-						PemsaEmulator.CleanupAndLoadCart(emulatorPointer, $"{Application.streamingAssetsPath}/carts/{controller.Id}.p8");
-					}
-				}
-			}
+			//		if (controller != null) {
+			//			PemsaEmulator.CleanupAndLoadCart(emulatorPointer, $"{Application.streamingAssetsPath}/carts/{controller.Id}.p8");
+			//		}
+			//	}
+			//}
 
 			PemsaEmulator.UpdateEmulator(emulatorPointer, Time.deltaTime);
 
