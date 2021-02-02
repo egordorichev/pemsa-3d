@@ -11,13 +11,11 @@ namespace emulator
 		private const int PlayerCount = 8;
 
 		private static bool[,] buttonsDown = new bool[ButtonCount, PlayerCount];
-		private static bool[,] buttonsPressed = new bool[ButtonCount, PlayerCount];
-		private static bool[,] buttonsDownLast = new bool[ButtonCount, PlayerCount];
 
-		private static Vector2 mousePosition;
+		public static Vector2 mousePosition = Vector2.zero;
 		private static int mouseButtonsMask;
 
-		private static bool isAnyKeyDown;
+		private static bool isAnyKeyDown = false;
 		private static string lastKeyDown = "";
 
 		private EmulatorInput input;
@@ -26,26 +24,26 @@ namespace emulator
 		{
 			input = new EmulatorInput();
 
-			input.PemsaControls.Left.performed += _ => UpdateButtonDownState(0, 0, true);
-			input.PemsaControls.Left.canceled += _ => UpdateButtonDownState(0, 0, false);
+			input.PemsaControls.Left.performed += _ => buttonsDown[0, 0] = true;
+			input.PemsaControls.Left.canceled += _ => buttonsDown[0, 0] = false;
 
-			input.PemsaControls.Right.performed += _ => UpdateButtonDownState(1, 0, true);
-			input.PemsaControls.Right.canceled += _ => UpdateButtonDownState(1, 0, false);
+			input.PemsaControls.Right.performed += _ => buttonsDown[1, 0] = true;
+			input.PemsaControls.Right.canceled += _ => buttonsDown[1, 0] = false;
 
-			input.PemsaControls.Up.performed += _ => UpdateButtonDownState(2, 0, true);
-			input.PemsaControls.Up.canceled += _ => UpdateButtonDownState(2, 0, false);
+			input.PemsaControls.Up.performed += _ => buttonsDown[2, 0] = true;
+			input.PemsaControls.Up.canceled += _ => buttonsDown[2, 0] = false;
 
-			input.PemsaControls.Down.performed += _ => UpdateButtonDownState(3, 0, true);
-			input.PemsaControls.Down.canceled += _ => UpdateButtonDownState(3, 0, false);
+			input.PemsaControls.Down.performed += _ => buttonsDown[3, 0] = true;
+			input.PemsaControls.Down.canceled += _ => buttonsDown[3, 0] = false;
 
-			input.PemsaControls.Z.performed += _ => UpdateButtonDownState(4, 0, true);
-			input.PemsaControls.Z.canceled += _ => UpdateButtonDownState(4, 0, false);
+			input.PemsaControls.Z.performed += _ => buttonsDown[4, 0] = true;
+			input.PemsaControls.Z.canceled += _ => buttonsDown[4, 0] = false;
 
-			input.PemsaControls.X.performed += _ => UpdateButtonDownState(5, 0, true);
-			input.PemsaControls.X.canceled += _ => UpdateButtonDownState(5, 0, false);
+			input.PemsaControls.X.performed += _ => buttonsDown[5, 0] = true;
+			input.PemsaControls.X.canceled += _ => buttonsDown[5, 0] = false;
 
-			input.PemsaControls.Pause.performed += _ => UpdateButtonDownState(6, 0, true);
-			input.PemsaControls.Pause.canceled += _ => UpdateButtonDownState(6, 0, false);
+			input.PemsaControls.Pause.performed += _ => buttonsDown[6, 0] = true;
+			input.PemsaControls.Pause.canceled += _ => buttonsDown[6, 0] = false;
 
 			input.PemsaControls.Analog.performed += ctx => {
 				buttonsDown[0, 0] = false;
@@ -89,45 +87,58 @@ namespace emulator
 		{
 			base.Update();
 
-            lock (buttonsPressed)
-            {
-				buttonsPressed[0, 0] = buttonsDown[0, 0] && !buttonsDownLast[0, 0];
-				buttonsPressed[1, 0] = buttonsDown[1, 0] && !buttonsDownLast[1, 0];
-				buttonsPressed[2, 0] = buttonsDown[2, 0] && !buttonsDownLast[2, 0];
-				buttonsPressed[3, 0] = buttonsDown[3, 0] && !buttonsDownLast[3, 0];
-                buttonsPressed[4, 0] = buttonsDown[4, 0] && !buttonsDownLast[4, 0];
-                buttonsPressed[5, 0] = buttonsDown[5, 0] && !buttonsDownLast[5, 0];
-                buttonsPressed[6, 0] = buttonsDown[6, 0] && !buttonsDownLast[6, 0];
-			}
-
             //isAnyKeyDown = Input.anyKeyDown;
 
+			if (Mouse.current.leftButton.wasPressedThisFrame)
+            {
+				mouseButtonsMask |= 0b001;
+			}
+			if (Mouse.current.leftButton.wasReleasedThisFrame)
+			{
+				mouseButtonsMask &= ~0b001;
+			}
 
-            //mouseButtonsMask = 0;
-            //mouseButtonsMask |= Input.GetKey(KeyCode.Mouse0) ? 1 : 0;
-            //mouseButtonsMask |= Input.GetKey(KeyCode.Mouse1) ? 2 : 0;
-            //mouseButtonsMask |= Input.GetKey(KeyCode.Mouse2) ? 4 : 0;
+			if (Mouse.current.rightButton.wasPressedThisFrame)
+			{
+				mouseButtonsMask |= 0b010;
+			}
+			if (Mouse.current.rightButton.wasReleasedThisFrame)
+			{
+				mouseButtonsMask &= ~0b010;
+			}
 
-            // Needs fixes: no rect transform
+			if (Mouse.current.middleButton.wasPressedThisFrame)
+			{
+				mouseButtonsMask |= 0b100;
+			}
+			if (Mouse.current.middleButton.wasReleasedThisFrame)
+			{
+				mouseButtonsMask &= ~0b100;
+			}
 
-            /*RectTransform rectTransform = emulator.GetComponent<RectTransform>();
-			RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, Input.mousePosition, Camera.main, out mousePosition);
+			var ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-			mousePosition += new Vector2(rectTransform.rect.width / 2, rectTransform.rect.height / 2);
-	        mousePosition = new Vector2((mousePosition.x / rectTransform.rect.width) * 128, (mousePosition.y / rectTransform.rect.height) * 128);*/
-        }
+			RaycastHit hit = new RaycastHit();
 
-		public void UpdateButtonDownState(int i, int j, bool v)
-        {
-			buttonsDownLast[i, j] = buttonsDown[i, j];
-			buttonsDown[i, j] = v;
+			if (Physics.Raycast(ray, out hit, int.MaxValue, LayerMask.GetMask("PemsaScreen")))
+			{
+				var transform = hit.collider.gameObject.transform;
+				var colSize = hit.collider.bounds.size;
+
+				mousePosition = hit.point - transform.position + colSize / 2;
+				mousePosition.x = 127 * mousePosition.x / colSize.x;
+				mousePosition.y = 127 * mousePosition.y / colSize.y;
+
+				mousePosition.y = -(mousePosition.y - 127);
+			}
+
 		}
 
         #region Api
         [MonoPInvokeCallback(typeof(PemsaEmulator.ManagedIsButtonDown))]
 		public static bool IsButtonDown(int i, int p)
 		{
-			lock (buttonsPressed)
+			lock (buttonsDown)
 			{
 				return buttonsDown[i, p];
 			}
@@ -136,10 +147,7 @@ namespace emulator
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedIsButtonPressed))]
 		public static bool IsButtonPressed(int i, int p)
 		{
-			lock (buttonsPressed)
-			{
-				return buttonsPressed[i, p];
-			}
+			return false;
 		}
 
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedUpdateInput))]
@@ -184,7 +192,7 @@ namespace emulator
 		[MonoPInvokeCallback(typeof(PemsaEmulator.ManagedResetInput))]
 		public static void ResetInput()
 		{
-			lock (buttonsPressed)
+			lock (buttonsDown)
 			{
 				for (int i = 0; i < ButtonCount; ++i)
 				{

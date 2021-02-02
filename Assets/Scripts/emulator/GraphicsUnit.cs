@@ -157,8 +157,8 @@ namespace emulator
                 var rv = screenColor[val & 0x0f];
                 var lv = screenColor[val >> 4];
 
-                screenColorData[i * 2] = Palette.standard[rv];
-                screenColorData[i * 2 + 1] = Palette.standard[lv];
+                screenColorData[i * 2 + 0] = (rv & 128) != 0 ? Palette.alternate[rv & 0b1111111] : Palette.standard[rv];
+                screenColorData[i * 2 + 1] = (lv & 128) != 0 ? Palette.alternate[lv & 0b1111111] : Palette.standard[lv];
             }
         }
 

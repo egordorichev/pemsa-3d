@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace emulator {
 	[RequireComponent(typeof(AudioSource))]
@@ -48,23 +49,26 @@ namespace emulator {
 		}
 
 		public void Update() {
-			//if (Input.GetMouseButtonDown(0)) {
-			//	var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Mouse.current.leftButton.wasPressedThisFrame)
+            {
+                var ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-			//	if (Physics.Raycast(ray, out var hit)) {
-			//		var controller = hit.collider.gameObject.GetComponent<CartController>();
+                if (Physics.Raycast(ray, out var hit))
+                {
+                    var controller = hit.collider.gameObject.GetComponent<CartController>();
 
-			//		if (controller != null) {
-			//			PemsaEmulator.CleanupAndLoadCart(emulatorPointer, $"{Application.streamingAssetsPath}/carts/{controller.Id}.p8");
-			//		}
-			//	}
-			//}
-
-			PemsaEmulator.UpdateEmulator(emulatorPointer, Time.deltaTime);
+                    if (controller != null)
+                    {
+                        PemsaEmulator.CleanupAndLoadCart(emulatorPointer, $"{Application.streamingAssetsPath}/carts/{controller.Id}.p8");
+                    }
+                }
+            }
 
 			foreach (var unit in units) {
 				unit.Update();
 			}
+
+            PemsaEmulator.UpdateEmulator(emulatorPointer, Time.deltaTime);
 		}
 
 		public void OnAudioFilterRead(float[] data, int channels) {
